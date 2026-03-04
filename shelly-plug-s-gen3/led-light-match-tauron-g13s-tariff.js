@@ -3,9 +3,9 @@
 
 // RGB (0-255)
 let COLORS_255 = {
-  BLUE: [0, 0, 255],
+  YELLOW: [255, 255, 0],
   RED: [255, 0, 0],
-  YELLOW: [255, 200, 0],
+  ORANGE: [255, 50, 0],
   LIGHT_GREEN: [0, 255, 120],
   DARK_GREEN: [0, 255, 0]
 };
@@ -36,7 +36,7 @@ function updateLed() {
   let isWeekend = (day === 0 || day === 6);
   let isSummer = (month >= 4 && month <= 9);
 
-  let colorName = "BLUE"; // blue light as default for night tariff
+  let colorName = "YELLOW"; // default for night tariff
 
   if (isSummer) {
     if (isWeekend) {
@@ -53,13 +53,13 @@ function updateLed() {
   } else { // Winter
     if (isWeekend) {
       print("Winter weekend.");
-      if (hour >= 7 && hour < 10) colorName = "YELLOW";
+      if (hour >= 7 && hour < 10) colorName = "ORANGE";
       else if (hour >= 10 && hour < 15) colorName = "DARK_GREEN";
-      else if (hour >= 15 && hour < 21) colorName = "YELLOW";
+      else if (hour >= 15 && hour < 21) colorName = "ORANGE";
     } else {
       print("Winter workday.");
       if (hour >= 7 && hour < 10) colorName = "RED";
-      else if (hour >= 10 && hour < 15) colorName = "YELLOW";
+      else if (hour >= 10 && hour < 15) colorName = "ORANGE";
       else if (hour >= 15 && hour < 21) colorName = "RED";
     }
   }
