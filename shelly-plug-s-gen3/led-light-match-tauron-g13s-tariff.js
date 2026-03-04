@@ -3,10 +3,10 @@
 
 // RGB (0-255)
 let COLORS_255 = {
-  YELLOW: [255, 255, 0],
+  BLUE: [255, 255, 0],
   RED: [255, 0, 0],
   ORANGE: [255, 50, 0],
-  LIGHT_GREEN: [0, 255, 120],
+  LIGHT_GREEN: [0, 255, 50],
   DARK_GREEN: [0, 255, 0]
 };
 
@@ -36,7 +36,7 @@ function updateLed() {
   let isWeekend = (day === 0 || day === 6);
   let isSummer = (month >= 4 && month <= 9);
 
-  let colorName = "YELLOW"; // default for night tariff
+  let colorName = "BLUE"; // default for night tariff
 
   if (isSummer) {
     if (isWeekend) {
