@@ -3,6 +3,7 @@
 
 // RGB (0-255)
 let COLORS_255 = {
+  BLACK: [0, 0, 0],
   BLUE: [0, 255, 255],
   RED: [255, 0, 0],
   ORANGE: [255, 50, 0],
@@ -98,7 +99,7 @@ function updateLed() {
 
 // Intro sequence
 
-let introSequence = ["BLUE", "RED", "ORANGE", "LIGHT_GREEN", "DARK_GREEN"];
+let introSequence = ["BLACK", "BLUE", "RED", "ORANGE", "LIGHT_GREEN", "DARK_GREEN", "BLACK"];
 let introStep = 0;
 
 function runIntro() {
@@ -126,7 +127,7 @@ function runIntro() {
     );
 
     introStep++;
-    Timer.set(2000, false, runIntro);
+    Timer.set(3000, false, runIntro);
   } else {
     print("Intro finished. Starting normal tariff operation...");
 
