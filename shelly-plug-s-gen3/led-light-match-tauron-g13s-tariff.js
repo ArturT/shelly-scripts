@@ -95,8 +95,46 @@ function updateLed() {
   lastHour = hour;
 }
 
-// repeat every 30s
-Timer.set(30000, true, updateLed);
 
-// run on the script start
-updateLed();
+// Intro sequence
+
+let introSequence = ["BLUE", "RED", "ORANGE", "LIGHT_GREEN", "DARK_GREEN"];
+let introStep = 0;
+
+function runIntro() {
+  if (introStep < introSequence.length) {
+    let colorName = introSequence[introStep];
+    let c100 = getConvertedColor(colorName);
+
+    print("Intro step", introStep + 1, "-", colorName);
+
+    Shelly.call(
+      "PLUGS_UI.SetConfig",
+      {
+        config: {
+          leds: {
+            mode: "switch",
+            colors: {
+              "switch:0": {
+                on: { rgb: c100, brightness: 100 },
+                off: { rgb: c100, brightness: 100 }
+              }
+            }
+          }
+        }
+      }
+    );
+
+    introStep++;
+    Timer.set(2000, false, runIntro);
+  } else {
+    print("Intro finished. Starting normal tariff operation...");
+
+    updateLed();
+
+    Timer.set(30000, true, updateLed);
+  }
+}
+
+print("Starting script...");
+runIntro();
