@@ -3,13 +3,11 @@
 
 // RGB (0-255)
 let COLORS_255 = {
-  RED: [255, 0, 0],         // 1. Najdrożej (Zima szczyt)
-  MAGENTA: [255, 0, 255],   // 2. Bardzo drogo (Lato szczyt)
-  YELLOW: [255, 200, 0],    // 3. Drogo (Zima środek/weekendy)
-  WHITE: [255, 255, 255],   // 4. Stawka neutralna (Zima/Lato weekendy wybrane godziny)
-  BLUE: [0, 0, 255],        // 5. Noce (codziennie)
-  CYAN: [0, 255, 255],      // 6. Tanio (Lato robocze środek dnia)
-  GREEN: [0, 255, 0]        // 7. Najtaniej (Lato weekendy środek dnia)
+  BLUE: [0, 0, 255],
+  RED: [255, 0, 0],
+  YELLOW: [255, 200, 0],
+  LIGHT_GREEN: [0, 255, 120],
+  DARK_GREEN: [0, 255, 0]
 };
 
 // convert RGB (0-255) to RGB (0-100) that is expected by Shelly
@@ -31,6 +29,7 @@ function updateLed() {
   if (hour === lastHour) {
     return; // skip the led update if we already did it
   }
+  print("---");
 
   let month = now.getMonth() + 1;
   let day = now.getDay();
@@ -40,24 +39,28 @@ function updateLed() {
   let colorName = "BLUE"; // blue light as default for night tariff
 
   if (isSummer) {
-    if (!isWeekend) {
-      if ((hour >= 7 && hour < 9) || (hour >= 17 && hour < 21)) colorName = "MAGENTA";
-      else if (hour >= 9 && hour < 17) colorName = "CYAN";
+    if (isWeekend) {
+      print("Summer weekend.");
+      if (hour >= 7 && hour < 9) colorName = "LIGHT_GREEN";
+      else if (hour >= 9 && hour < 17) colorName = "DARK_GREEN";
+      else if (hour >= 17 && hour < 21) colorName = "LIGHT_GREEN";
     } else {
-      // Letnie weekendy
-      if (hour >= 7 && hour < 9) colorName = "WHITE";
-      else if (hour >= 9 && hour < 18) colorName = "GREEN";
-      else if (hour >= 18 && hour < 22) colorName = "WHITE";
+      print("Summer workday.");
+      if (hour >= 7 && hour < 9) colorName = "RED";
+      else if (hour >= 9 && hour < 17) colorName = "LIGHT_GREEN";
+      else if (hour >= 17 && hour < 21) colorName = "RED";
     }
   } else { // Winter
-    if (!isWeekend) {
-      if ((hour >= 7 && hour < 10) || (hour >= 15 && hour < 21)) colorName = "RED";
-      else if (hour >= 10 && hour < 15) colorName = "YELLOW";
+    if (isWeekend) {
+      print("Winter weekend.");
+      if (hour >= 7 && hour < 10) colorName = "YELLOW";
+      else if (hour >= 10 && hour < 15) colorName = "DARK_GREEN";
+      else if (hour >= 15 && hour < 21) colorName = "YELLOW";
     } else {
-      // Zimowe weekendy
-      if (hour >= 8 && hour < 11) colorName = "YELLOW";
-      else if (hour >= 11 && hour < 15) colorName = "WHITE";
-      else if (hour >= 15 && hour < 22) colorName = "YELLOW";
+      print("Winter workday.");
+      if (hour >= 7 && hour < 10) colorName = "RED";
+      else if (hour >= 10 && hour < 15) colorName = "YELLOW";
+      else if (hour >= 15 && hour < 21) colorName = "RED";
     }
   }
 
@@ -83,7 +86,7 @@ function updateLed() {
       if (error_code !== 0) {
         print("Error:", error_message);
       } else {
-        print("Success: LED light's color has been updated: ", colorName);
+        print("Success: LED light's color has been updated to: ", colorName, ' at ', now);
         print("RGB (0-255): [", c255[0], ",", c255[1], ",", c255[2], "] as RGB (0-100): [", c100[0], ",", c100[1], ",", c100[2], "]");
       }
     }
