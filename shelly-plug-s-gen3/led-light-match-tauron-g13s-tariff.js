@@ -1,4 +1,7 @@
-// Paleta Wysokiego Kontrastu (0-255)
+// Copyright: https://github.com/ArturT/shelly-scripts
+// Docs: https://shelly-api-docs.shelly.cloud/gen2/Devices/Gen3/ShellyPlugSG3
+
+// RGB (0-255)
 let COLORS_255 = {
   RED: [255, 0, 0],         // 1. Najdrożej (Zima szczyt)
   MAGENTA: [255, 0, 255],   // 2. Bardzo drogo (Lato szczyt)
@@ -9,7 +12,7 @@ let COLORS_255 = {
   GREEN: [0, 255, 0]        // 7. Najtaniej (Lato weekendy środek dnia)
 };
 
-// Funkcja pomocnicza: przelicza RGB (0-255) na RGB (0-100) jako liczby całkowite
+// convert RGB (0-255) to RGB (0-100) that is expected by Shelly
 function getConvertedColor(colorName) {
   let c255 = COLORS_255[colorName];
   return [
@@ -34,10 +37,10 @@ function updateLed() {
   let isWeekend = (day === 0 || day === 6);
   let isSummer = (month >= 4 && month <= 9);
 
-  let colorName = "BLUE"; // Domyślnie Niebieski dla najtańszych godzin nocnych
+  let colorName = "BLUE"; // blue light as default for night tariff
 
   if (!isSummer) {
-    // ZIMA (1 października - 31 marca)
+    // Winter (Oct 1 - March 31)
     if (!isWeekend) {
       if ((hour >= 7 && hour < 10) || (hour >= 15 && hour < 21)) colorName = "RED";
       else if (hour >= 10 && hour < 15) colorName = "YELLOW";
@@ -48,7 +51,7 @@ function updateLed() {
       else if (hour >= 15 && hour < 22) colorName = "YELLOW";
     }
   } else {
-    // LATO (1 kwietnia - 30 września)
+    // Summer (April 1 - September 30)
     if (!isWeekend) {
       if ((hour >= 7 && hour < 9) || (hour >= 17 && hour < 21)) colorName = "MAGENTA";
       else if (hour >= 9 && hour < 17) colorName = "CYAN";
@@ -60,7 +63,6 @@ function updateLed() {
     }
   }
 
-  // Pobranie przeliczonych wartości (0-100) oraz oryginalnych (0-255) dla logów
   let c100 = getConvertedColor(colorName);
   let c255 = COLORS_255[colorName];
 
@@ -69,7 +71,7 @@ function updateLed() {
     {
       config: {
         leds: {
-          mode: "switch", // Automatycznie wymusza tryb "Stan przełącznika" w aplikacji
+          mode: "switch", // allow custom LED colors
           colors: {
             "switch:0": {
               on: { rgb: c100, brightness: 100 },
@@ -81,22 +83,19 @@ function updateLed() {
     },
     function (result, error_code, error_message) {
       if (error_code !== 0) {
-        print("BŁĄD API Shelly:", error_message);
+        print("Error:", error_message);
       } else {
-        print("SUKCES: Zmieniono tryb na 'switch' i ustawiono kolor.");
+        print("Success: LED light's color has been updated: ", colorName);
+        print("RGB (0-255): [", c255[0], ",", c255[1], ",", c255[2], "] as RGB (0-100): [", c100[0], ",", c100[1], ",", c100[2], "]");
       }
     }
   );
 
-  // Szczegółowy log ułatwiający weryfikację
-  print("Zmiana taryfy! Godzina:", hour, ":00 -> Kolor:", colorName);
-  print("Wysłano RGB (0-255): [", c255[0], ",", c255[1], ",", c255[2], "] jako RGB (0-100): [", c100[0], ",", c100[1], ",", c100[2], "]");
-
   lastHour = hour;
 }
 
-// Sprawdzaj co 30 sekund
+// repeat every 30s
 Timer.set(30000, true, updateLed);
 
-// Uruchom od razu przy zapisaniu/starcie
+// run on the script start
 updateLed();
