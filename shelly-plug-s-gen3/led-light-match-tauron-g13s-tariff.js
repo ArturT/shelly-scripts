@@ -39,19 +39,7 @@ function updateLed() {
 
   let colorName = "BLUE"; // blue light as default for night tariff
 
-  if (!isSummer) {
-    // Winter (Oct 1 - March 31)
-    if (!isWeekend) {
-      if ((hour >= 7 && hour < 10) || (hour >= 15 && hour < 21)) colorName = "RED";
-      else if (hour >= 10 && hour < 15) colorName = "YELLOW";
-    } else {
-      // Zimowe weekendy
-      if (hour >= 8 && hour < 11) colorName = "YELLOW";
-      else if (hour >= 11 && hour < 15) colorName = "WHITE";
-      else if (hour >= 15 && hour < 22) colorName = "YELLOW";
-    }
-  } else {
-    // Summer (April 1 - September 30)
+  if (isSummer) {
     if (!isWeekend) {
       if ((hour >= 7 && hour < 9) || (hour >= 17 && hour < 21)) colorName = "MAGENTA";
       else if (hour >= 9 && hour < 17) colorName = "CYAN";
@@ -60,6 +48,16 @@ function updateLed() {
       if (hour >= 7 && hour < 9) colorName = "WHITE";
       else if (hour >= 9 && hour < 18) colorName = "GREEN";
       else if (hour >= 18 && hour < 22) colorName = "WHITE";
+    }
+  } else { // Winter
+    if (!isWeekend) {
+      if ((hour >= 7 && hour < 10) || (hour >= 15 && hour < 21)) colorName = "RED";
+      else if (hour >= 10 && hour < 15) colorName = "YELLOW";
+    } else {
+      // Zimowe weekendy
+      if (hour >= 8 && hour < 11) colorName = "YELLOW";
+      else if (hour >= 11 && hour < 15) colorName = "WHITE";
+      else if (hour >= 15 && hour < 22) colorName = "YELLOW";
     }
   }
 
