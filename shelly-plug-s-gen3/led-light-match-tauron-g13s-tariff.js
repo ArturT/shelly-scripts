@@ -77,7 +77,7 @@ function updateLed() {
           colors: {
             "switch:0": {
               on: { rgb: c100, brightness: 100 },
-              off: { rgb: c100, brightness: 100 }
+              off: { rgb: c100, brightness: 0 }
             }
           }
         }
