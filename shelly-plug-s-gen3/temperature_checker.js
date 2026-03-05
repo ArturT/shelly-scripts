@@ -1,3 +1,6 @@
+// Copyright: https://github.com/ArturT/shelly-scripts
+// Docs: https://shelly-api-docs.shelly.cloud/gen2/ComponentsAndServices/Switch/#status
+
 function checkTemperature() {
   Shelly.call("Switch.GetStatus", { id: 0 }, function (result) {
     if (result && result.temperature) {
