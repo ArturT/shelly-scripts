@@ -10,14 +10,14 @@ The LED light matches Tauron G13s tariff.
 
 ![Tauron G13s tariff hours](images/g13s-tariff-hours.png)
 
-For clarity between yellow & `rgb(255, 50, 0)` orange colors, we use `rgb(0, 255, 255)` light blue for the night tariff. You can use the LED as a night light then.
+For clarity between 🟡 yellow & 🟠 orange colors, we use 💠 light blue for the night tariff. You can use the LED as a night light then.
 
-In winter weekend we use `rgb(0, 255, 0)` dark green for the cheapest period, because that's the cheapest you can get during winter.
+In winter weekend we use 🟢 dark green for the cheapest period, because that's the cheapest you can get during winter.
 
 Summer has two green colors:
 
-* `rgb(0, 255, 50)` light green - for cheap hours during workdays
-* `rgb(0, 255, 0)` dark green - for the cheapest hours during weekend
+* 🍏 light green - for cheap hours during workdays
+* 🟢 dark green - for the cheapest hours during weekend
 
 __Configuration of the scripts:__
 
