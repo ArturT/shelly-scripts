@@ -14,7 +14,7 @@ __Configuration of the script:__
 
 Ensure `Run on startup` is `ON`.
 
-__About the script:___
+__About the script:__
 
 The LED light matches Tauron G13s tariff.
 
