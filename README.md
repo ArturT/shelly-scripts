@@ -4,7 +4,17 @@ Shelly Scripts for devices like Shelly Plug S Gen3
 
 ## Shelly Plug S Gen3
 
+__Configuration of the scripts:__
+
+Add the script to your Shelly PlugS Gen3 device in settings: http://192.168.1.57/#/scripts (use your Shelly device IP to connect).
+
 ### Script: LED Light match Tauron G13s tariff
+
+__Configuration of the script:__
+
+Ensure `Run on startup` is `ON`.
+
+__About the script:___
 
 The LED light matches Tauron G13s tariff.
 
@@ -18,11 +28,6 @@ Summer has two green colors:
 
 * 🍏 light green - for cheap hours during workdays
 * 🟢 dark green - for the cheapest hours during weekend
-
-__Configuration of the scripts:__
-
-Ensure `Run on startup` is ON for the script added to your Shelly PlugS Gen3 device in settings: http://192.168.1.57/#/scripts (use your Shelly device IP to connect).
-
 
 ### Script: Temperature Checker
 
